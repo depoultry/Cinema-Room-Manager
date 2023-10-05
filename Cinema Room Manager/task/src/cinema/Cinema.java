@@ -17,9 +17,13 @@ public class Cinema {
         System.out.println("Enter the number of seats in each row:");
         int seatsQ = scanner.nextInt();
 
+        // Initializes seatingChart array using the user's first two input - rowsQ and seatsQ
         String[][] seatingChart = new String[rowsQ + 1][seatsQ + 1];
+        // Sends array to buildSeating() to build the array
         buildSeating(seatingChart);
 
+        /* Front half of the rows are $10 and back half are $8. This ternary operator
+        calculates the total possible income for this seating arrangement */
         int totalIncome = rowsQ % 2 == 0 ? (((rowsQ / 2) * seatsQ) * HIGH_TICKET_PRICE) + (((rowsQ / 2) * seatsQ) * LOW_TICKET_PRICE) :
                 (((rowsQ / 2) * seatsQ) * HIGH_TICKET_PRICE) + (((rowsQ - (rowsQ / 2)) * seatsQ) * LOW_TICKET_PRICE);
         int totalSeats = rowsQ * seatsQ;
@@ -44,6 +48,7 @@ public class Cinema {
         }
     }
 
+    // shows the user the menu options and prompts them to input an option which is returned via the method
     public static int cinemaMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
@@ -56,6 +61,7 @@ public class Cinema {
         return scanner.nextInt();
     }
 
+    // This method edits the indexes of the seatingChart array so that it can be later displayed to the user
     public static void buildSeating(String[][] seatingChart) {
 
         for (int i = 0; i < seatingChart.length; i++) {
@@ -73,6 +79,7 @@ public class Cinema {
         }
     }
 
+    // rowQuestion and seatQuestion are two methods that query the users for the row and seat location that they want to purchase
     public static int rowQuestion() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nEnter a row number:");
@@ -85,6 +92,10 @@ public class Cinema {
         return scanner.nextInt();
     }
 
+    /* pickSeating checks to ensure that the row and seat picked are not out bounds and has not been previously purchased.
+    If it hasn't, the index in seatingChart associated with the row and seat the user selected is edited to show a "B"
+    indicating that it has been purchased.
+     */
     public static void pickSeating(String[][] seatingChart, int rowPicked, int seatPicked, int rowsQ, int seatsQ) {
 
         if (rowPicked <= 0 || seatPicked <= 0 || rowPicked > rowsQ || seatPicked > seatsQ) {
